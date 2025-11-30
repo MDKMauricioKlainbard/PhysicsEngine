@@ -1,13 +1,12 @@
 #include "SimplePendulum.h"
 #include <cmath>
 #include <stdexcept>
-using namespace std;
 
 SimplePendulum::SimplePendulum(double length, double gravity) : LagrangianSystem(1)
 {
     if (!(length > 0) || !(gravity > 0))
     {
-        throw invalid_argument("Length and gravity must be positive");
+        throw std::invalid_argument("Length and gravity must be positive");
     }
 
     L = length;

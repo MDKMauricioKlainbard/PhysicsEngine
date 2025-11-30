@@ -8,6 +8,6 @@ add_library(CorePhysics
 
 target_include_directories(CorePhysics PUBLIC include)
 
-add_executable(Simulador examples/pendulum_demo.cpp)
+add_executable(Simulator examples/pendulum_demo.cpp)
 
 target_link_libraries(Simulator CorePhysics)

@@ -4,13 +4,12 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-using namespace std;
 
 LagrangianSystem::LagrangianSystem(int dof)
 {
     if (!(dof > 0))
     {
-        throw invalid_argument("Degrees of freedom must be greater than 0");
+        throw std::invalid_argument("Degrees of freedom must be greater than 0");
     }
 
     degrees_of_freedom = dof;
@@ -23,11 +22,11 @@ LagrangianSystem::~LagrangianSystem()
 {
 }
 
-void LagrangianSystem::set_state(const vector<double> &q_in, const vector<double> &q_dot_in)
+void LagrangianSystem::set_state(const std::vector<double> &q_in, const std::vector<double> &q_dot_in)
 {
     if (q_in.size() != get_dof() || q_dot_in.size() != get_dof())
     {
-        throw invalid_argument("Vector length must be equal to DOF of the system");
+        throw std::invalid_argument("Vector length must be equal to DOF of the system");
     }
 
     q = q_in;
@@ -43,10 +42,10 @@ void LagrangianSystem::step_integration(double dt)
     }
 }
 
-void LagrangianSystem::run_simulation(double t0, double t_max, double dt, string filename)
+void LagrangianSystem::run_simulation(double t0, double t_max, double dt, std::string filename)
 {
     double t = t0;
-    ofstream file;
+    std::ofstream file;
     bool write_to_file = !filename.empty();
 
     if (write_to_file)
@@ -54,20 +53,20 @@ void LagrangianSystem::run_simulation(double t0, double t_max, double dt, string
         file.open(filename);
         if (!file.is_open())
         {
-            throw runtime_error("Could not open file: " + filename);
+            throw std::runtime_error("Could not open file: " + filename);
         }
         file << "t";
         for (int i = 0; i < degrees_of_freedom; ++i)
             file << ",q" << i;
         for (int i = 0; i < degrees_of_freedom; ++i)
             file << ",v" << i;
-        file << endl;
+        file << std::endl;
 
-        cout << "Simulating... saving in " << filename << endl;
+        std::cout << "Simulating... saving in " << filename << std::endl;
     }
     else
     {
-        cout << "Simulating... (no output file)" << endl;
+        std::cout << "Simulating... (no output file)" << std::endl;
     }
 
     while (t < t_max)
@@ -79,7 +78,7 @@ void LagrangianSystem::run_simulation(double t0, double t_max, double dt, string
                 file << "," << val;
             for (double val : q_dot)
                 file << "," << val;
-            file << endl;
+            file << std::endl;
         }
 
         this->compute_accelerations(t);
@@ -91,16 +90,16 @@ void LagrangianSystem::run_simulation(double t0, double t_max, double dt, string
     if (write_to_file)
     {
         file.close();
-        cout << "Simulation ended." << endl;
+        std::cout << "Simulation ended." << std::endl;
     }
 }
 
-vector<double> LagrangianSystem::get_q() const
+std::vector<double> LagrangianSystem::get_q() const
 {
     return q;
 }
 
-vector<double> LagrangianSystem::get_q_dot() const
+std::vector<double> LagrangianSystem::get_q_dot() const
 {
     return q_dot;
 }
@@ -110,7 +109,7 @@ int LagrangianSystem::get_dof() const
     return degrees_of_freedom;
 }
 
-vector<double> LagrangianSystem::get_q_ddot() const
+std::vector<double> LagrangianSystem::get_q_ddot() const
 {
     return q_ddot;
 }
