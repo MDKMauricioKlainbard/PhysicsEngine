@@ -1,4 +1,4 @@
-# Lagrangian Physics Engine
+# Lagrangian Physics Engine - 🚧 Status: Work in Progress - Pre-Alpha
 
 A modular C++ physics engine designed to simulate mechanical systems using the **Lagrangian Formalism** and **Numerical Integration**. 
 
